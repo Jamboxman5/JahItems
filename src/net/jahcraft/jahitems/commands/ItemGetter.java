@@ -31,12 +31,13 @@ public class ItemGetter implements CommandExecutor {
 				return true;
 			}
 			
-			if (args.length != 1) {
+			if (args.length > 1) {
 				p.sendMessage(ChatColor.RED + "Usage: /itemgetter <itemname>");
 				return true;
 			}
 			
-			String itemName = args[0].toLowerCase();
+			String itemName = "list";
+			if (args.length > 0) itemName = args[0].toLowerCase();
 			
 			if (itemName.equals("list")) {
 				

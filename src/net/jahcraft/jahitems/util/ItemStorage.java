@@ -17,7 +17,6 @@ import net.jahcraft.jahitems.items.Cutlass;
 import net.jahcraft.jahitems.items.JetPack;
 import net.jahcraft.jahitems.items.JumpyBoots;
 import net.jahcraft.jahitems.items.Katana;
-import net.jahcraft.jahitems.items.Lightsaber;
 import net.jahcraft.jahitems.items.NetheriteCutlass;
 import net.jahcraft.jahitems.items.NetheriteKatana;
 import net.jahcraft.jahitems.items.NetheriteRapier;
@@ -52,8 +51,6 @@ public class ItemStorage {
 		items.put("salmonsushi", new SalmonSushi());
 		items.put("tomato", new Tomato());
 		items.put("banhammer", new BanHammer());
-		items.put("lightsaber", new Lightsaber(0, 1));
-		items.put("nicklightsaber", new Lightsaber(1, 2));
 		
 		return items;
 	}

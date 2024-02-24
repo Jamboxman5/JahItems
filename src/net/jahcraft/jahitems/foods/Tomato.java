@@ -16,7 +16,7 @@ public class Tomato extends ItemStack {
 		super(Material.APPLE);
 		
 		ItemMeta meta = getItemMeta();
-		meta.setCustomModelData(7);
+		meta.setCustomModelData(1);
 		meta.setDisplayName(ChatColor.RESET + "Tomato");
 		
 		List<String> lore = new ArrayList<String>();

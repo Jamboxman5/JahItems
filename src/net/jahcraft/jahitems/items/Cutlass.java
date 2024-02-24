@@ -28,8 +28,8 @@ public class Cutlass extends ItemStack {
 		lore.add(ChatColor.of("#FFD700") + "" + ChatColor.BOLD + "Offical Jah Donor Item!");
 		lore.add(ChatColor.of("#49B3FF") + "" + ChatColor.BOLD + "" + ChatColor.STRIKETHROUGH + "=-=-=-=-=-=-=");
 		lore.add("");
-		lore.add(ChatColor.of("#779AD8") + "Great for swashbucklin'");
-		lore.add(ChatColor.of("#779AD8") + "with yer maties.");
+		lore.add(ChatColor.of("#779AD8") + "Great fer swashbucklin'");
+		lore.add(ChatColor.of("#779AD8") + "with yer mateys.");
 		lore.add("");
 		lore.add(ChatColor.of("#49B3FF") + "" + ChatColor.BOLD + "" + ChatColor.STRIKETHROUGH + "=-=-=-=-=-=-=");
 		lore.add("");

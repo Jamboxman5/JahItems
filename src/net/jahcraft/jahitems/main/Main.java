@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.jahcraft.jahitems.commands.BladeColor;
 import net.jahcraft.jahitems.commands.ItemGetter;
 import net.jahcraft.jahitems.commands.ItemGiver;
 import net.jahcraft.jahitems.commands.TicketGiver;
@@ -12,7 +11,6 @@ import net.jahcraft.jahitems.listeners.BanHammerListener;
 import net.jahcraft.jahitems.listeners.ItemListListener;
 import net.jahcraft.jahitems.listeners.JetPackListener;
 import net.jahcraft.jahitems.listeners.JumpyBootsListener;
-import net.jahcraft.jahitems.listeners.LightsaberListener;
 import net.jahcraft.jahitems.listeners.ScubaHelmetListener;
 import net.jahcraft.jahitems.runnables.NightVisionChecker;
 
@@ -42,7 +40,6 @@ public class Main extends JavaPlugin {
 					getCommand("itemgetter").setExecutor((CommandExecutor) new ItemGetter());
 					getCommand("ticketgiver").setExecutor((CommandExecutor) new TicketGiver());
 					getCommand("itemgiver").setExecutor((CommandExecutor) new ItemGiver());
-					getCommand("bladecolor").setExecutor((CommandExecutor) new BladeColor());
 					
 					//LISTENERS
 					getServer().getPluginManager().registerEvents(new JumpyBootsListener(), this);
@@ -51,7 +48,6 @@ public class Main extends JavaPlugin {
 					getServer().getPluginManager().registerEvents(new JetPackListener(), this);
 					getServer().getPluginManager().registerEvents(new BanHammerListener(), this);
 					getServer().getPluginManager().registerEvents(new ItemListListener(), this);
-					getServer().getPluginManager().registerEvents(new LightsaberListener(this), this);
 					
 					//UI
 					ItemGetter.menu = ItemGetter.createList();
