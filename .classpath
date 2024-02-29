@@ -17,6 +17,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="H:/My Drive/Plugin Workspace/Vault.jar"/>
+	<classpathentry kind="lib" path="G:/My Drive/Plugin Workspace/Vault.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,9 +1,12 @@
 package net.jahcraft.jahitems.listeners;
 
+import java.util.Date;
+
 import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.ban.ProfileBanList;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +35,8 @@ public class BanHammerListener implements Listener {
 		
 		if (e.getEntity() instanceof Player) {
 			Player target = (Player) e.getEntity();
-			Bukkit.getBanList(Type.NAME).addBan(target.getName(), banReason, null, damager.getName());
+			ProfileBanList banList = (ProfileBanList) Bukkit.getBanList(Type.PROFILE);
+			banList.addBan(target.getPlayerProfile(), banReason, (Date) null, damager.getName());
 			target.kickPlayer(banReason);
 			
 			for (Player p : Bukkit.getServer().getOnlinePlayers()) {
