@@ -1,5 +1,6 @@
 package net.jahcraft.jahitems.listeners;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,89 +21,42 @@ public class ScubaHelmetListener implements Listener {
 	public void onJump(PlayerMoveEvent event) {
 		
 		Player player = (Player) event.getPlayer();
+		ItemStack helm = player.getInventory().getHelmet();
 		
-		if (player.getInventory().getHelmet() != null) {
-		
-			if (player.getInventory().getHelmet().getItemMeta().getDisplayName().contains("Scuba Helmet")) {
+		if (isScubaHelmet(helm)) {
+			player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 1));
+
+		} else if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null &&
+				   player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 99999) {
 			
-				if (player.getInventory().getHelmet().getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-				
-					player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 1));
-						
-					
-				} else {
-					
-					if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null ) {
-						if (player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 1000) {
-							player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-						}
-					}
-					
-				}
-			}else {
-				
-				if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null ) {
-					if (player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 1000) {
-						player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-					}
-				}
-			}
-		}else {
-			
-			if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null ) {
-				if (player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 1000) {
-					player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-				}
-			}
-			
+			player.removePotionEffect(PotionEffectType.WATER_BREATHING);
+
 		}
 		
+	}
+	
+	private boolean isScubaHelmet(ItemStack i) {
+		return (i != null && i.getType() == Material.GLASS && i.hasItemMeta() && i.getItemMeta().isUnbreakable());
 	}
 	
 	@EventHandler
 	public void onClose(InventoryCloseEvent event) {
 		
 		Player player = (Player) event.getPlayer();
+		ItemStack helm = player.getInventory().getHelmet();
 		
-		if (player.getInventory().getHelmet() != null) {
-		
-			if (player.getInventory().getHelmet().getItemMeta().getDisplayName().contains("Scuba Helmet")) {
+		if (isScubaHelmet(helm)) {
+			player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 1));
+
+		} else if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null &&
+				   player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 99999) {
 			
-				if (player.getInventory().getHelmet().getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-				
-					player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 1));
-						
-					
-				} else {
-					
-					if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null ) {
-						if (player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 1000) {
-							player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-						}
-					}
-					
-				}
-			}else {
-				
-				if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null ) {
-					if (player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 1000) {
-						player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-					}
-				}
-			}
-		}else {
-			
-			if (player.getPotionEffect(PotionEffectType.WATER_BREATHING) != null ) {
-				if (player.getPotionEffect(PotionEffectType.WATER_BREATHING).getDuration() > 1000) {
-					player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-				}
-			}
-			
+			player.removePotionEffect(PotionEffectType.WATER_BREATHING);
+
 		}
 		
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		
@@ -110,30 +64,15 @@ public class ScubaHelmetListener implements Listener {
 		ItemStack item = e.getCursor();
 		ItemStack oldHelm = p.getEquipment().getHelmet();
 		
-		if (item.getItemMeta() != null) {
-						
-
-			if (item.getItemMeta().getDisplayName().contains("Scuba Helmet")) {
+		if (isScubaHelmet(item)) {
+			if (e.getSlotType() == SlotType.ARMOR) {
 				
-				
-				if (item.getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-					
-					
-					if (e.getSlotType() == SlotType.ARMOR) {
-						
-						e.setCancelled(true);
-						e.setCursor(oldHelm);
-						p.getEquipment().setHelmet(item);
-						
-					}
-					
-				}
+				e.setCancelled(true);
+				e.getWhoClicked().setItemOnCursor(oldHelm);
+				p.getEquipment().setHelmet(item);
 				
 			}
-			
-		}
-
-		
+		}		
 		
 	}
 	
@@ -142,19 +81,8 @@ public class ScubaHelmetListener implements Listener {
 		
 		ItemStack item = e.getItemInHand();
 		
-		if (item.getItemMeta() != null) {
-			
-
-			if (item.getItemMeta().getDisplayName().contains("Scuba Helmet")) {
-				
-				
-				if (item.getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-					
-					e.setCancelled(true);
-					
-				}
-			}
-		}
+		if (isScubaHelmet(item)) e.setCancelled(true);
+		
 	}
 	
 	@EventHandler
@@ -165,15 +93,9 @@ public class ScubaHelmetListener implements Listener {
 			ItemStack item = p.getInventory().getItemInMainHand();
 			ItemStack oldHelm = p.getEquipment().getHelmet();
 			
-			if (item.getItemMeta() != null) {
-				if (oldHelm == null) {
-					if (item.getItemMeta().getDisplayName().contains("Scuba Helmet")) {
-						if (item.getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-							p.getEquipment().setHelmet(item);
-							p.getInventory().setItemInMainHand(null);
-						}
-					}
-				}
+			if (isScubaHelmet(item)) {
+				p.getEquipment().setHelmet(item);
+				p.getInventory().setItemInMainHand(oldHelm);
 			}
 			
 		}
@@ -188,17 +110,9 @@ public class ScubaHelmetListener implements Listener {
 			ItemStack item = e.getCurrentItem();
 			ItemStack oldHelm = p.getEquipment().getHelmet();
 			
-			if (item != null) {
-				if (item.getItemMeta() != null) {
-					if (oldHelm == null) {
-						if (item.getItemMeta().getDisplayName().contains("Scuba Helmet")) {
-							if (item.getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-								p.getEquipment().setHelmet(item);
-								p.getInventory().setItem(e.getSlot(), null);
-							}
-						}
-					}
-				}
+			if (isScubaHelmet(item) && !isScubaHelmet(oldHelm)) {
+				p.getEquipment().setHelmet(item);
+				p.getInventory().setItem(e.getSlot(), oldHelm);
 			}
 			
 		}

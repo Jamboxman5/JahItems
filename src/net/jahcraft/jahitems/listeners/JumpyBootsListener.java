@@ -7,10 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class JumpyBootsListener implements Listener {
 	
@@ -21,57 +20,43 @@ public class JumpyBootsListener implements Listener {
 		
 		Player player = (Player) event.getPlayer();
 		
-		if (player.getInventory().getBoots() != null) {
+		if (player.getInventory().getBoots() == null) return;
+		ItemStack boots = player.getInventory().getBoots();
+		if (!isJumpyBoots(boots)) return;
+		if (player.isSneaking()) return;
 		
-			if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Jumpy Boots")) {
-			
-				if (player.getInventory().getBoots().getItemMeta().getLore().contains(ChatColor.of("#FFD700") + "" + ChatColor.BOLD + "Offical Jah Donor Item!")) {
-				
-					if (!player.isSneaking()) {
-						
-						double jumpVelocity = (double) 0.42F;
-						if (player.hasPotionEffect(PotionEffectType.JUMP)) {
-							jumpVelocity += (double) ((float) (player.getPotionEffect(PotionEffectType.JUMP).getAmplifier() + 1) * 0.1F);
-						}
-						
-						if (event.getFrom().getY() < event.getTo().getY() &&
-//							player.getLocation().subtract(0, 1, 0).getBlock().getType() != Material.AIR &&
-							player.getLocation().getBlock().getType() != Material.LADDER &&
-							!player.isOnGround()
-							&& Double.compare(player.getVelocity().getY(), jumpVelocity) == 0) {
-							player.setVelocity(player.getVelocity().add(new Vector(0,.5,0)));
-							
-						}
-					}
-					
-				}
-			}
+		double jumpVelocity = (double) 0.42F;
+		if (player.hasPotionEffect(PotionEffectType.JUMP)) {
+			jumpVelocity += (double) ((float) (player.getPotionEffect(PotionEffectType.JUMP).getAmplifier() + 1) * 0.1F);
 		}
 		
+		if (event.getFrom().getY() < event.getTo().getY() &&
+//			player.getLocation().subtract(0, 1, 0).getBlock().getType() != Material.AIR &&
+			player.getLocation().getBlock().getType() != Material.LADDER &&
+			!player.isOnGround()
+			&& Double.compare(player.getVelocity().getY(), jumpVelocity) == 0) {
+			player.setVelocity(player.getVelocity().add(new Vector(0,.5,0)));
+			
+		}
+		
+	}
+	
+	private boolean isJumpyBoots(ItemStack i) {
+		return (i.getType() == Material.GOLDEN_BOOTS && i.hasItemMeta() && i.getItemMeta().getCustomModelData() == 1);
 	}
 	
 	@EventHandler
 	
 	public void onFall(EntityDamageEvent event) {
 	
-		if (event.getEntity() instanceof Player) {
+		if (!(event.getEntity() instanceof Player)) return;
 		
-			Player player = (Player) event.getEntity();
-			
-			if (event.getCause() == DamageCause.FALL) {
-			
-				if (player.getInventory().getBoots() != null)
-				
-					if (player.getInventory().getBoots().getItemMeta().getDisplayName().contains("Jumpy Boots"))
-					
-						if (player.getInventory().getBoots().getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-							event.setCancelled(true);
-							
-				}
-				
-			}
-			
-		}
+		Player player = (Player) event.getEntity();
+		
+		if (event.getCause() != DamageCause.FALL) return;
+		
+		if (player.getInventory().getBoots() == null) return;
+		if (isJumpyBoots(player.getInventory().getBoots())) event.setCancelled(true); 
 		
 	}
 

@@ -17,49 +17,42 @@ public class JetPackListener implements Listener {
 	@EventHandler
 	public void onClick(PlayerInteractEvent e) {
 		
-		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			
-			ItemStack item = e.getItem();
-			
-			if (item != null) {
-				Player p = e.getPlayer();
-				
-				if (item.getItemMeta() != null) {
-					
+		if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+	
+		ItemStack item = e.getItem();
+		if (item == null) return;
+		if (!isJetPack(item)) return;
+		if (e.getPlayer() == null) return;
 
-					if (item.getItemMeta().getDisplayName().contains("Jet Pack")) {
-						
-						
-						if (item.getItemMeta().getLore().get(2).contains("Offical Jah Donor Item!")) {
-							
-							e.setCancelled(true);
-							
-							boolean heightLimitReached = true;
-							
-							for (int i = 0; i < 80; i++) {
-								if (p.getLocation().subtract(0, i, 0).getBlock().getType() != Material.AIR) {
-									heightLimitReached = false;
-								}
-							}
-							
-							if (!heightLimitReached) {
-								p.setVelocity(p.getLocation().getDirection().multiply(.4).setY(.4));
-								p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1f, 1f);
-								p.spawnParticle(Particle.FLAME, p.getLocation(), 10);
-							} else {
-								p.sendMessage(ChatColor.RED + "Height limit reached!");
-							}
-							
-							
-						}
-					}
-				}
+		Player p = e.getPlayer();
+			
+		e.setCancelled(true);
+		
+		jet(p, Math.min(item.getAmount(), 5));
+		
+	}
+	
+	private boolean isJetPack(ItemStack i) {
+		return (i.getType() == Material.FIREWORK_STAR && i.hasItemMeta() && i.getItemMeta().getCustomModelData() == 1);
+	}
+	
+	private void jet(Player p, int power) {
+		boolean heightLimitReached = true;
+		
+		for (int i = 0; i < 80 * power; i++) {
+			if (p.getLocation().subtract(0, i, 0).getBlock().getType() != Material.AIR) {
+				heightLimitReached = false;
 			}
-			
-			
-			
 		}
 		
+		if (!heightLimitReached) {
+			p.setVelocity(p.getLocation().getDirection().multiply(.4).setY(.4).multiply(power));
+			p.getLocation().getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1f, 1f);
+			p.getLocation().getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 5*power, .3f, .3f, .3f, .03f*power);
+			p.getLocation().getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 5*power, .3f, .3f, .3f, .03f*power);
+		} else {
+			p.sendMessage(ChatColor.RED + "Height limit reached!");
+		}
 	}
 
 }
