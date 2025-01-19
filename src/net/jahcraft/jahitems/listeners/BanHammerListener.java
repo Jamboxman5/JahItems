@@ -33,6 +33,9 @@ public class BanHammerListener implements Listener {
 		if (!damager.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) return;
 		if (damager.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() != 1) return;
 		
+		damager.getWorld().playSound(e.getEntity().getLocation(), "jahpack.extras.hammerhit", 2, 1);	
+		damager.getWorld().playSound(e.getEntity().getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);	
+
 		if (e.getEntity() instanceof Player) {
 			Player target = (Player) e.getEntity();
 			ProfileBanList banList = (ProfileBanList) Bukkit.getBanList(Type.PROFILE);
